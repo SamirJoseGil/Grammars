@@ -85,43 +85,6 @@ export function TreePanel({ data }: { data: ParserTreeNode | ParserTreeNode[] | 
         </div>
       </div>
       <div id="tree-container" ref={ref} className="relative mt-6 h-[26rem] overflow-hidden rounded-2xl bg-slate-950/5 dark:bg-white/5">
-        {/* Zoom Controls */}
-        {normalized && (
-          <div className="absolute top-4 right-4 z-10 flex gap-2">
-            <button
-              onClick={handleZoomOut}
-              disabled={zoom <= 0.3}
-              className="inline-flex items-center justify-center h-9 w-9 rounded-lg bg-sky-500/10 text-sky-600 hover:bg-sky-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-colors dark:text-sky-300 dark:hover:bg-sky-500/30 border border-sky-300/30 dark:border-sky-500/30"
-              title="Zoom out"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-              </svg>
-            </button>
-            <div className="flex items-center justify-center px-2 py-1 rounded-lg bg-slate-950/5 border border-slate-300/30 dark:bg-white/5 dark:border-white/10 text-xs font-medium text-slate-600 dark:text-slate-400 min-w-[3rem]">
-              {Math.round(zoom * 100)}%
-            </div>
-            <button
-              onClick={handleZoomIn}
-              disabled={zoom >= 2}
-              className="inline-flex items-center justify-center h-9 w-9 rounded-lg bg-sky-500/10 text-sky-600 hover:bg-sky-500/20 disabled:opacity-30 disabled:cursor-not-allowed transition-colors dark:text-sky-300 dark:hover:bg-sky-500/30 border border-sky-300/30 dark:border-sky-500/30"
-              title="Zoom in"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-            </button>
-            <button
-              onClick={handleResetZoom}
-              disabled={zoom === 1}
-              className="inline-flex items-center justify-center px-2 h-9 rounded-lg bg-slate-300/20 text-slate-600 hover:bg-slate-300/30 disabled:opacity-30 disabled:cursor-not-allowed transition-colors dark:bg-white/10 dark:text-slate-300 dark:hover:bg-white/15 border border-slate-300/30 dark:border-white/10 text-xs font-medium"
-              title="Reset zoom"
-            >
-              Reset
-            </button>
-          </div>
-        )}
-
         {!normalized ? (
           <div className="flex h-full items-center justify-center px-8 text-center text-sm text-slate-500 dark:text-slate-400">Ejecuta el análisis para ver el árbol.</div>
         ) : TreeLib ? (
