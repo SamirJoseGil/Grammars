@@ -1,0 +1,14 @@
+node_modules/
+dist/
+build/
+.vite/
+.cache/
+.env
+.env.*
+.idea/
+.DS_Store
+node_modules
+
+/.cache
+/build
+.env

@@ -1,0 +1,13 @@
+Django==6.0.4
+djangorestframework
+django-cors-headers
+nltk
+dj-database-url
+gunicorn
+whitenoise
+psycopg2-binary
+python-dotenv
+Django==6.0.4
+djangorestframework
+django-cors-headers
+nltk
