@@ -1,4 +1,5 @@
-import type { MetaFunction } from "@remix-run/node";
+import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 
 import { HeroSection } from "~/components/HeroSection";
@@ -8,8 +9,11 @@ import { SiteFooter } from "~/components/SiteFooter";
 import { SiteHeader } from "~/components/SiteHeader";
 import { TeamSection } from "~/components/TeamSection";
 import { useThemeMode } from "~/hooks/useThemeMode";
+import { ENV } from "~/env.server";
 
-const API_BASE = (globalThis as { __API_BASE?: string }).__API_BASE || "http://127.0.0.1:8000";
+export function loader({}: LoaderFunctionArgs) {
+  return json({ apiBaseUrl: ENV.API_BASE_URL });
+}
 
 type ParserTreeNode = { name: string; children?: ParserTreeNode[] };
 
@@ -19,6 +23,7 @@ export const meta: MetaFunction = () => [
 ];
 
 export default function Index() {
+  const { apiBaseUrl } = useLoaderData<typeof loader>();
   const { theme, toggleTheme } = useThemeMode();
   const [grammar, setGrammar] = useState<string>(
     `E = E + T | E - T | T
@@ -43,7 +48,7 @@ F = ( E ) | n`
     try {
       const body = { grammar, text };
 
-      const parseRes = await fetch(`${API_BASE}/parse`, {
+      const parseRes = await fetch(`${apiBaseUrl}/parse`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
@@ -52,7 +57,7 @@ F = ( E ) | n`
       if (!parseRes.ok) throw new Error(parseData.error || "No se pudo analizar.");
       setParseInfo(parseData);
 
-      const derRes = await fetch(`${API_BASE}/derivation`, {
+      const derRes = await fetch(`${apiBaseUrl}/derivation`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...body, derivation_type: derivationType }),
@@ -61,7 +66,7 @@ F = ( E ) | n`
       if (!derRes.ok) throw new Error(derData.error || "No se pudo derivar.");
       setDerivation(derData.steps || []);
 
-      const treeRes = await fetch(`${API_BASE}/tree`, {
+      const treeRes = await fetch(`${apiBaseUrl}/tree`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
