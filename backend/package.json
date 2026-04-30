@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "framer-motion": "^12.38.0",
-    "react-d3-tree": "^3.6.6"
-  }
-}

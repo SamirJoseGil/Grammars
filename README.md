@@ -1,135 +1,239 @@
-# Grammars
+# Grammar Studio
 
-Grammar Studio
-===============
+Proyecto full-stack para el análisis de gramáticas libres de contexto (CFG), derivaciones y visualización de árboles sintácticos.
 
-Proyecto full-stack: frontend Remix + backend Django REST para análisis de gramáticas (CFG), derivación y visualización de árboles.
+Combina un frontend en Remix con un backend en Django REST, permitiendo explorar gramáticas de forma interactiva y estructurada.
 
-Características principales
--------------------------
-- Parseo de gramáticas en formato BNF y notación académica (E = E + T)
-- Derivación paso a paso (izquierda/derecha)
-- Generación y exportación de árbol de derivación (PNG)
-- OCR para importar gramáticas (frontend)
-- Documentación OpenAPI/Swagger en `/api/docs/`
+---
 
-Endpoints (backend)
--------------------
-Prefijo general: `/api/`
+## Descripción
 
-- POST `/api/parse`
-	- Descripción: Analiza la gramática y el texto proporcionado.
-	- Cuerpo (JSON): `{ "grammar": string, "text": string }`
-	- Respuesta: JSON con información de parse (tree_count, ambiguous, ...) o error.
+Grammar Studio permite:
 
-- POST `/api/derivation`
-	- Descripción: Genera derivación paso a paso.
-	- Cuerpo (JSON): `{ "grammar": string, "text": string, "derivation_type": "left"|"right" }
-	- Respuesta: `{ "steps": ["..."], ... }`
+* Parsear gramáticas en formato BNF y notación académica
+* Generar derivaciones paso a paso (izquierda y derecha)
+* Construir árboles de derivación
+* Exportar árboles como imagen (PNG)
+* Importar gramáticas mediante OCR
+* Explorar la API mediante documentación interactiva
 
-- POST `/api/tree`
-	- Descripción: Devuelve la(s) estructura(s) del árbol de derivación en formato JSON serializable.
-	- Cuerpo (JSON): `{ "grammar": string, "text": string }`
-	- Respuesta: `{ "tree": {...} }` o `{ "trees": [...] }` si ambigüedad.
+---
 
-- POST `/api/ast`
-	- Descripción: Devuelve el AST (estructura intermedia) generado por el parser.
-	- Cuerpo: igual que `/api/tree`.
+## Enfoque técnico
 
-Documentación OpenAPI
----------------------
-- `/api/schema/` → OpenAPI JSON
-- `/api/docs/` → Swagger UI (interactivo)
-- `/api/redoc/` → ReDoc
+El sistema está construido bajo principios de Programación Orientada a Objetos (POO), separando responsabilidades en:
 
-Configuración local (desarrollo)
---------------------------------
-Requisitos
-- Python 3.12
-- Node.js (compatible con Remix/Vite)
-- PostgreSQL (opcional para local) — el proyecto cae a SQLite si no hay `database_url`.
+* Lógica de parsing
+* Generación de árboles
+* Representación intermedia (AST)
+* Capa de servicios (API REST)
+
+---
+
+## Arquitectura
+
+Frontend (Remix) → API REST (Django) → Motor de parsing (Python)
+
+---
+
+## Endpoints (Backend)
+
+```json
+Prefijo base: /api/
+
+POST /api/parse
+Analiza una gramática y un texto.
+
+Body:
+{
+"grammar": "string",
+"text": "string"
+}
+
+Respuesta:
+{
+"tree_count": number,
+"ambiguous": boolean
+}
+
+POST /api/derivation
+Genera derivación paso a paso.
+
+Body:
+{
+"grammar": "string",
+"text": "string",
+"derivation_type": "left" | "right"
+}
+
+POST /api/tree
+Devuelve árbol(es) de derivación en formato JSON.
+
+POST /api/ast
+Devuelve el AST generado por el parser.
+```
+
+---
+
+## Documentación API
+
+```json
+/api/schema/ → OpenAPI JSON
+/api/docs/ → Swagger UI
+/api/redoc/ → ReDoc
+```
+
+---
+
+## Configuración local
 
 Backend
-1. Crear y activar virtualenv
 
-```bash
+```json
 cd backend
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-2. Configurar variables (archivo `backend/.env` para desarrollo, ejemplo en `backend/.env.sample`):
+Archivo .env:
 
-```
+```json
 secret_key=changeme
 debug=True
 database_url=
-# direct_url se usa para CORS desde frontend en desarrollo
-direct_url=http://localhost:5173
+direct_url=[http://localhost:5173](http://localhost:5173)
 allowed_hosts=localhost,127.0.0.1
 ```
 
-3. Migraciones y correr servidor
+Ejecución:
 
-```bash
+```json
 python manage.py migrate
 python manage.py runserver
 ```
 
-4. Ejecutar tests
+Tests:
 
-```bash
+```json
 python manage.py test parser
 ```
 
-Frontend
-1. Instalar dependencias y correr dev server
+---
 
-```bash
+Frontend
+
+```json
 cd frontend
 npm install
 npm run dev
 ```
 
-2. Variables de entorno (archivo `frontend/.env` en local):
+Archivo .env:
 
-```
-# Desarrollo local -> apunta al backend local
-api_base_url=http://127.0.0.1:8000/api
+```json
+api_base_url=[http://127.0.0.1:8000/api](http://127.0.0.1:8000/api)
 NODE_ENV=development
 ```
 
-3. En producción (Vercel) la app toma `api_base_url` y la normaliza automáticamente:
-	 - Si pones `api_base_url=/api` entonces el frontend hace requests relativos (misma ruta)
-	 - Si pones `api_base_url=grammarapi.sglabs.site` (sin protocolo), la app la normaliza a `https://grammarapi.sglabs.site`
+---
 
-Notas sobre la duplicación de rutas
-----------------------------------
-- Si el valor de `api_base_url` se proporciona sin protocolo y sin `/` (por ejemplo `grammarapi.sglabs.site`), el frontend anteriormente lo trataba como ruta relativa; ahora la normalización lo convierte a `https://grammarapi.sglabs.site`.
-- No pongas en Vercel `api_base_url` con un valor que contenga ya el dominio junto con el dominio principal (evitar `https://grammar.sglabs.site/grammarapi.sglabs.site`).
-- Para despliegues en la misma ruta (frontend y backend bajo un mismo dominio), usa `api_base_url=/api`.
+## Deployment (Vercel)
 
-CORS y seguridad
-----------------
-- `backend/config/settings.py` contiene `CORS_ALLOWED_ORIGINS` y acepta localhosts por defecto.
-- Añade en `backend/.env` `direct_url` o incluye `grammar.sglabs.site` en `allowed_hosts` y CORS para producción.
+* Frontend en ruta /
+* Backend en ruta /api
 
-Vercel deployment notes
------------------------
-- `vercel.json` debe mapear el servicio backend a `"routePrefix": "/api"` (ya configurado en el repo)
-- En Vercel:
-	- Frontend Service: entrypoint `frontend`, routePrefix `/`
-	- Backend Service: entrypoint `backend`, routePrefix `/api`
-- En Environment Variables (Vercel):
-	- Para frontend (Production): `api_base_url=grammarapi.sglabs.site`  (o `/api` si el backend está en la misma ruta)
-	- Para backend: `database_url=postgresql://...` (Neon URL), `direct_url=https://grammar.sglabs.site`, `allowed_hosts=grammar.sglabs.site`
+Variables importantes:
 
-Debug
------
-- Hay una ruta `/debug` en el frontend que muestra qué variables de entorno está leyendo el servidor y la URL normalizada (útil para verificar en Vercel).
+```json
+api_base_url=/api
+database_url=postgresql://...
+allowed_hosts=grammar.sglabs.site
+```
 
-Contribuidores
---------------
-- Samir Jose Osorio Gil
-- Isabella builtrago uzuga
+---
+
+## CORS y seguridad
+
+Configurado en Django (settings.py):
+
+* CORS_ALLOWED_ORIGINS
+* allowed_hosts
+* direct_url para entorno local
+
+---
+
+## Ficha técnica
+
+Frontend
+
+* Framework: Remix 2.16.0
+* Lenguaje: TypeScript
+* Runtime: Node.js >= 20
+
+Dependencias principales:
+
+* React 18
+* Axios
+* Framer Motion
+* React D3 Tree
+* Tesseract.js
+* html2canvas
+
+Herramientas de desarrollo:
+
+* Vite
+* TailwindCSS
+* ESLint
+* TypeScript
+
+---
+
+Backend
+
+* Framework: Django 6.0.4
+* API: Django REST Framework
+* Documentación: drf-spectacular
+
+Dependencias clave:
+
+* nltk
+* psycopg2
+* gunicorn
+* django-cors-headers
+* whitenoise
+
+---
+
+Base de datos
+
+* PostgreSQL en producción
+* SQLite en desarrollo
+
+---
+
+IDE utilizado
+
+* Visual Studio Code
+
+---
+
+Paradigma
+
+* Programación Orientada a Objetos (POO)
+
+---
+
+## Integrantes
+
+* Samir José Osorio Gil
+* Isabella Builtrago Uzuga
+
+---
+
+## Entrega
+
+* Repositorio en GitHub
+* Código funcional
+* README documentado
+* Uso de POO en la solución
