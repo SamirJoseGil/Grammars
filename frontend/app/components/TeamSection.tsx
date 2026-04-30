@@ -11,7 +11,7 @@ const team = [
     role: "Full Stack Developer",
     roles: ["Backend", "Frontend", "Arquitectura"],
     description: "Participó en el diseño e implementación del sistema, incluyendo la construcción de la API REST, la lógica de procesamiento de gramáticas y el desarrollo de la interfaz en Remix. También contribuyó en la definición de la arquitectura y la integración entre frontend y backend.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+    image: "samir.jpeg",
     portfolio: "https://portfolio.sglabs.site/"
   },
   {
@@ -19,7 +19,7 @@ const team = [
     role: "Frontend & UX/UI",
     roles: ["Frontend", "UX/UI", "Testing"],
     description: "Apoyó en el desarrollo de la interfaz de usuario, la organización de flujos de interacción y la validación funcional del sistema. Participó en pruebas, revisión de casos de uso y documentación del proyecto.",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
+    image: "isabella.jpeg",
     portfolio: "https://example.com"
   }
 ];
