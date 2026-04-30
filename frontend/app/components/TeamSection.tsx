@@ -37,7 +37,7 @@ export function TeamSection() {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="h-52 w-52 rounded-2xl object-cover border border-sky-300/30"
+                    className="h-32 w-32 rounded-2xl object-cover border border-sky-300/30"
                   />
                   <div className="flex-1">
                     <p className="text-xs uppercase tracking-[0.25em] text-sky-500 dark:text-sky-200 font-semibold">{member.role}</p>
