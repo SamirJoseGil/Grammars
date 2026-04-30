@@ -8,20 +8,20 @@ const fadeUp = { hidden: { opacity: 0, y: 18 }, show: { opacity: 1, y: 0 } };
 const team = [
   {
     name: "Samir Jose Osorio Gil",
-    role: "Full Stack",
-    roles: ["Backend", "Frontend", "Project Manager"],
-    description: "Líder del proyecto. Desarrollo completo de la API REST, lógica del parser con NLTK, interfaz de usuario con React/Remix, gestión del proyecto y arquitectura general del sistema.",
+    role: "Full Stack Developer",
+    roles: ["Backend", "Frontend", "Arquitectura"],
+    description: "Participó en el diseño e implementación del sistema, incluyendo la construcción de la API REST, la lógica de procesamiento de gramáticas y el desarrollo de la interfaz en Remix. También contribuyó en la definición de la arquitectura y la integración entre frontend y backend.",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
-    portfolio: "https://portfolio.sglabs.site/",
+    portfolio: "https://portfolio.sglabs.site/"
   },
   {
-    name: "Integrante",
-    role: "Apoyo",
-    roles: ["Testing", "Documentación"],
-    description: "Soporte en pruebas unitarias, validación de casos de uso, documentación técnica y preparación de la presentación del proyecto.",
+    name: "Isabella Builtrago Uzuga",
+    role: "Frontend & UX/UI",
+    roles: ["Frontend", "UX/UI", "Testing"],
+    description: "Apoyó en el desarrollo de la interfaz de usuario, la organización de flujos de interacción y la validación funcional del sistema. Participó en pruebas, revisión de casos de uso y documentación del proyecto.",
     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
-    portfolio: "https://example.com",
-  },
+    portfolio: "https://example.com"
+  }
 ];
 
 export function TeamSection() {
