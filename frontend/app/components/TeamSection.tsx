@@ -15,7 +15,7 @@ const team = [
     portfolio: "https://portfolio.sglabs.site/"
   },
   {
-    name: "Isabella Builtrago Uzuga",
+    name: "Isabella Builtrago Usuga",
     role: "Frontend & UX/UI",
     roles: ["Frontend", "UX/UI", "Testing"],
     description: "Apoyó en el desarrollo de la interfaz de usuario, la organización de flujos de interacción y la validación funcional del sistema. Participó en pruebas, revisión de casos de uso y documentación del proyecto.",
