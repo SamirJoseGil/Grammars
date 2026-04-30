@@ -20,7 +20,7 @@ const team = [
     roles: ["Frontend", "UX/UI", "Testing"],
     description: "Apoyó en el desarrollo de la interfaz de usuario, la organización de flujos de interacción y la validación funcional del sistema. Participó en pruebas, revisión de casos de uso y documentación del proyecto.",
     image: "isabella.jpeg",
-    portfolio: "https://example.com"
+    portfolio: ""
   }
 ];
 
@@ -37,7 +37,7 @@ export function TeamSection() {
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="h-16 w-16 rounded-2xl object-cover border border-sky-300/30"
+                    className="h-52 w-52 rounded-2xl object-cover border border-sky-300/30"
                   />
                   <div className="flex-1">
                     <p className="text-xs uppercase tracking-[0.25em] text-sky-500 dark:text-sky-200 font-semibold">{member.role}</p>
