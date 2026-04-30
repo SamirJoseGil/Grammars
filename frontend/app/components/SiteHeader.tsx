@@ -3,7 +3,7 @@ export function SiteHeader({ theme, onToggleTheme }: { theme: "light" | "dark"; 
     <header className="sticky top-0 z-40 border-b border-white/40 bg-white/35 backdrop-blur-2xl dark:border-white/10 dark:bg-slate-950/35">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-sky-300/30 bg-sky-400/15 text-lg font-black text-sky-500 shadow-lg shadow-sky-400/10">G</div>
+          <img src="favicon.ico" alt="" />
           <div>
             <p className="text-xs uppercase tracking-[0.28em] text-sky-500/80 dark:text-sky-200/80">Grammar Studio</p>
             <p className="text-sm text-slate-600 dark:text-slate-300">Parser visual</p>
